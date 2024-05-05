@@ -1,5 +1,6 @@
-#include <iostream>
+#include "world.hpp"
 
 int main() {
-  std::cout << "Hello world\n";
+  World w;
+  w.run();
 }

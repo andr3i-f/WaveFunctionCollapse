@@ -8,13 +8,17 @@ project(wfc)
 include(FetchContent)
 
 FetchContent_Declare(
-    SFML
-    GIT_REPOSITORY  https://github.com/SFML/SFML.git
-    GIT_TAG origin/master
+        SFML
+        GIT_REPOSITORY  https://github.com/SFML/SFML.git
+        GIT_TAG origin/master
 )
 
 FetchContent_MakeAvailable(SFML)
 
 add_executable(wfc
-    src/main.cpp
+        src/main.cpp
+        src/world.cpp
+        src/world.hpp
 )
+
+target_link_libraries(wfc PRIVATE sfml-graphics)
