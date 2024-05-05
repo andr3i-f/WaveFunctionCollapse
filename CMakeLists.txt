@@ -19,6 +19,8 @@ add_executable(wfc
         src/main.cpp
         src/world.cpp
         src/world.hpp
+        src/tile.cpp
+        src/tile.hpp
 )
 
 target_link_libraries(wfc PRIVATE sfml-graphics)
