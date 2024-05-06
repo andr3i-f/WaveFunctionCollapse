@@ -5,6 +5,8 @@
 #include <memory>
 #include <unordered_map>
 #include <iostream>
+#include <stack>
+#include <random>
 #include "tile.hpp"
 
 class World {
@@ -16,6 +18,10 @@ public:
     void update();
     void render();
     void processEvents();
+
+    void collapse();
+    std::unique_ptr<Tile>& findTile();
+    void getNeighbors(std::stack<std::unique_ptr<Tile>>&);
 private:
     uint SCREEN_WIDTH{ 800 };
     uint SCREEN_HEIGHT{ 800 };

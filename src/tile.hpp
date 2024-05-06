@@ -31,11 +31,15 @@ public:
     ~Tile();
 
     bool isTransformed();
-    void updatePossibilities(std::unordered_map<TileType, std::array<TileType, 4>> &, TileType &, Direction &);
+    void updatePossibilities(std::unordered_map<TileType, std::array<TileType, 4>> &, std::unique_ptr<Tile> &, Direction &);
     void transform();
 
     void draw(sf::RenderWindow&);
+    int getEntropyLevel();
+    std::vector<TileType>& getPossibleTiles();
 private:
+    void eraseTileType(TileType);
+
     sf::Sprite sprite;
     sf::Texture texture;
 

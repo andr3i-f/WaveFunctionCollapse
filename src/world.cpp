@@ -54,3 +54,31 @@ void World::processEvents() {
     }
   }
 }
+
+void World::collapse() {
+
+}
+
+std::unique_ptr<Tile>& World::findTile() {
+  // Find the tile with the smallest entropy value - picks random tile in beginning
+  std::random_device rd;
+  std::uniform_int_distribution<std::mt19937::result_type> range(0, AMOUNT_OF_TILES - 1);
+  int x{ 0 }, y{ 0 };
+  int lowestEntropyValue{ TILE_POSSIBILITIES };
+
+  for (size_t i{ 0 }; i < AMOUNT_OF_TILES; ++i) {
+    for (size_t j{ 0 }; j < AMOUNT_OF_TILES; ++j) {
+      if (array[i][j]->getEntropyLevel() < lowestEntropyValue) {
+        x = i;
+        y = j;
+        lowestEntropyValue = array[i][j]->getEntropyLevel();
+      }
+    }
+  }
+
+  return lowestEntropyValue == TILE_POSSIBILITIES ? array[range(rd)][range(rd)] : array[x][y];
+}
+
+void World::getNeighbors(std::stack<std::unique_ptr<Tile>> & stack) {
+
+}
