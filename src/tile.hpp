@@ -4,7 +4,8 @@
 
 class Tile {
 public:
-    Tile(sf::Texture &, sf::Font &, int);
+    Tile(sf::Texture &, sf::Font &, sf::Vector2f, int, int, int);
+    Tile(Tile &);
     ~Tile();
 
     bool isTransformed();
@@ -19,6 +20,8 @@ private:
     sf::Font font;
     sf::Text text;
     int possibilities{};
+
+    int x{}, y{};
 
     bool transformed{};
 };
