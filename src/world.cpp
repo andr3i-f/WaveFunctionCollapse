@@ -19,7 +19,7 @@ void World::run() {
 
   for (size_t i{ 0 }; i < AMOUNT_OF_TILES; ++i) {
     for (size_t j{ 0 }; j < AMOUNT_OF_TILES; ++j) {
-      sf::Vector2f position{8 + (float)i*16, 8 + (float)j*16 };
+      sf::Vector2f position{tileWidth/2 + (float)i * tileWidth, tileHeight/2 + (float)j * tileHeight };
       array[i][j] = std::make_unique<Tile>(texture, font, position, TILE_POSSIBILITIES, i, j);
     }
   }
