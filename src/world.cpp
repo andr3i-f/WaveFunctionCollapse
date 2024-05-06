@@ -79,6 +79,6 @@ std::unique_ptr<Tile>& World::findTile() {
   return lowestEntropyValue == TILE_POSSIBILITIES ? array[range(rd)][range(rd)] : array[x][y];
 }
 
-void World::getNeighbors(std::stack<std::unique_ptr<Tile>> & stack) {
+void World::getNeighbors(std::stack<TilePositionDirection> &, std::unique_ptr<Tile>&) {
 
 }

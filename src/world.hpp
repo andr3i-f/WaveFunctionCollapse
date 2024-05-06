@@ -9,6 +9,11 @@
 #include <random>
 #include "tile.hpp"
 
+struct TilePositionDirection {
+  int x{}, y{};
+  Direction d;
+};
+
 class World {
 public:
     World();
@@ -21,7 +26,7 @@ public:
 
     void collapse();
     std::unique_ptr<Tile>& findTile();
-    void getNeighbors(std::stack<std::unique_ptr<Tile>>&);
+    void getNeighbors(std::stack<TilePositionDirection>&, std::unique_ptr<Tile>&);
 private:
     uint SCREEN_WIDTH{ 800 };
     uint SCREEN_HEIGHT{ 800 };
