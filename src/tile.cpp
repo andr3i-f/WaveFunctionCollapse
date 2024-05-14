@@ -50,30 +50,39 @@ void Tile::transform() {
       sprite.setTextureRect(sf::IntRect{{0, 0}, {16, 16}});
       break;
     case grassSandHalfN:
+      type = grassSandHalfN;
       sprite.setTextureRect(sf::IntRect{{0, 64}, {16, 16}});
       break;
     case grassSandHalfE:
+      type = grassSandHalfN;
       sprite.setTextureRect(sf::IntRect{{0, 48}, {16, 16}});
       break;
     case grassSandHalfS:
+      type = grassSandHalfS;
       sprite.setTextureRect(sf::IntRect{{16, 64}, {16, 16}});
       break;
     case grassSandHalfW:
+      type = grassSandHalfW;
       sprite.setTextureRect(sf::IntRect{{16, 48}, {16, 16}});
       break;
     case grassSandCornerNE:
+      type = grassSandCornerNE;
       sprite.setTextureRect(sf::IntRect{{32, 16}, {16, 16}});
       break;
     case grassSandCornerSE:
+      type = grassSandCornerSE;
       sprite.setTextureRect(sf::IntRect{{48, 16}, {16, 16}});
       break;
     case grassSandCornerSW:
+      type = grassSandCornerSW;
       sprite.setTextureRect(sf::IntRect{{48, 0}, {16, 16}});
       break;
     case grassSandCornerNW:
+      type = grassSandCornerNW;
       sprite.setTextureRect(sf::IntRect{{32, 0}, {16, 16}});
       break;
     case water:
+      type = water;
       sprite.setTextureRect(sf::IntRect{{0, 32}, {16, 16}});
       break;
     default:
