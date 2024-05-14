@@ -10,6 +10,9 @@
 #include "tile.hpp"
 
 struct TilePositionDirection {
+  TilePositionDirection(int x, int y, Direction d) : x(x), y(y) {
+    this->d = d;
+  }
   int x{}, y{};
   Direction d;
 };

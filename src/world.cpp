@@ -79,6 +79,26 @@ std::unique_ptr<Tile>& World::findTile() {
   return lowestEntropyValue == TILE_POSSIBILITIES ? array[range(rd)][range(rd)] : array[x][y];
 }
 
-void World::getNeighbors(std::stack<TilePositionDirection> &, std::unique_ptr<Tile>&) {
-
+void World::getNeighbors(std::stack<TilePositionDirection> & stack, std::unique_ptr<Tile> & tile) {
+  for (int x{ -1 }; x < 2; ++x) {
+    for (int y{ -1 }; y < 2; ++y) {
+      try {
+        if (x == 0 || y == 0 && (x != 0 && y != 0)) {
+          if (array.at(x + tile->getX()).at(y + tile->getY())) {
+            Direction d;
+            if (x == 0 && y == -1) {
+              d = N;
+            } else if (x == -1 && y == 0) {
+              d = W;
+            } else if (x == 1 && y == 0) {
+              d = E;
+            } else if (x == 0 && y == 1) {
+              d = S;
+            }
+            stack.push({x + tile->getX(), y + tile->getY(), d});
+          }
+        }
+      } catch (std::out_of_range & e) { }
+    }
+  }
 }

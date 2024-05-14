@@ -117,3 +117,11 @@ void Tile::eraseTileType(TileType t) {
     }
   }
 }
+
+int Tile::getX() {
+  return x;
+}
+
+int Tile::getY() {
+  return y;
+}

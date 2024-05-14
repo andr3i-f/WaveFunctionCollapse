@@ -37,6 +37,9 @@ public:
     void draw(sf::RenderWindow&);
     int getEntropyLevel();
     std::vector<TileType>& getPossibleTiles();
+
+    int getX();
+    int getY();
 private:
     void eraseTileType(TileType);
 
