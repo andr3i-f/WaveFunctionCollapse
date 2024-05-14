@@ -27,6 +27,7 @@ void World::run() {
   while (window.isOpen()) {
     processEvents();
     update();
+    collapse();
     render();
   }
 }
@@ -56,10 +57,19 @@ void World::processEvents() {
 }
 
 void World::collapse() {
+  sf::Vector2i tilePosition{findTile()};
+  array[tilePosition.x][tilePosition.y]->transform();
+  std::stack<TilePositionDirection> stack;
+  getNeighbors(stack, tilePosition);
 
+  while (!stack.empty()) {
+    TilePositionDirection current{ stack.top() };
+    stack.pop();
+    array[current.x][current.y]->updatePossibilities(key, array[tilePosition.x][tilePosition.y], current.d);
+  }
 }
 
-std::unique_ptr<Tile>& World::findTile() {
+sf::Vector2i World::findTile() {
   // Find the tile with the smallest entropy value - picks random tile in beginning
   std::random_device rd;
   std::uniform_int_distribution<std::mt19937::result_type> range(0, AMOUNT_OF_TILES - 1);
@@ -76,15 +86,18 @@ std::unique_ptr<Tile>& World::findTile() {
     }
   }
 
-  return lowestEntropyValue == TILE_POSSIBILITIES ? array[range(rd)][range(rd)] : array[x][y];
+  sf::Vector2i randomXY = {static_cast<int>(range(rd)), static_cast<int>(range(rd))};
+  sf::Vector2i tileXY = {x, y};
+
+  return lowestEntropyValue == TILE_POSSIBILITIES ? randomXY : tileXY;
 }
 
-void World::getNeighbors(std::stack<TilePositionDirection> & stack, std::unique_ptr<Tile> & tile) {
+void World::getNeighbors(std::stack<TilePositionDirection> & stack, sf::Vector2i & tilePosition) {
   for (int x{ -1 }; x < 2; ++x) {
     for (int y{ -1 }; y < 2; ++y) {
       try {
-        if (x == 0 || y == 0 && (x != 0 && y != 0)) {
-          if (array.at(x + tile->getX()).at(y + tile->getY())) {
+        if ((x == 0 || y == 0) && (x != 0 || y != 0)) {
+          if (array.at(x + tilePosition.x).at(y + tilePosition.y)) {
             Direction d;
             if (x == 0 && y == -1) {
               d = N;
@@ -95,7 +108,7 @@ void World::getNeighbors(std::stack<TilePositionDirection> & stack, std::unique_
             } else if (x == 0 && y == 1) {
               d = S;
             }
-            stack.push({x + tile->getX(), y + tile->getY(), d});
+            stack.push({x + tilePosition.x, y + tilePosition.y, d});
           }
         }
       } catch (std::out_of_range & e) { }

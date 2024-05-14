@@ -28,8 +28,8 @@ public:
     void processEvents();
 
     void collapse();
-    std::unique_ptr<Tile>& findTile();
-    void getNeighbors(std::stack<TilePositionDirection>&, std::unique_ptr<Tile>&);
+    sf::Vector2i findTile();
+    void getNeighbors(std::stack<TilePositionDirection>&, sf::Vector2i&);
 private:
     uint SCREEN_WIDTH{ 800 };
     uint SCREEN_HEIGHT{ 800 };
