@@ -58,14 +58,16 @@ void World::processEvents() {
 
 void World::collapse() {
   sf::Vector2i tilePosition{findTile()};
-  array[tilePosition.x][tilePosition.y]->transform();
-  std::stack<TilePositionDirection> stack;
-  getNeighbors(stack, tilePosition);
+  if (array[tilePosition.x][tilePosition.y]->getEntropyLevel() <= 9) {
+    array[tilePosition.x][tilePosition.y]->transform();
+    std::stack<TilePositionDirection> stack;
+    getNeighbors(stack, tilePosition);
 
-  while (!stack.empty()) {
-    TilePositionDirection current{ stack.top() };
-    stack.pop();
-    array[current.x][current.y]->updatePossibilities(key, array[tilePosition.x][tilePosition.y], current.d);
+    while (!stack.empty()) {
+      TilePositionDirection current{ stack.top() };
+      stack.pop();
+      array[current.x][current.y]->updatePossibilities(key, array[tilePosition.x][tilePosition.y], current.d);
+    }
   }
 }
 
@@ -78,7 +80,7 @@ sf::Vector2i World::findTile() {
 
   for (size_t i{ 0 }; i < AMOUNT_OF_TILES; ++i) {
     for (size_t j{ 0 }; j < AMOUNT_OF_TILES; ++j) {
-      if (array[i][j]->getEntropyLevel() < lowestEntropyValue) {
+      if (array[i][j]->getEntropyLevel() < lowestEntropyValue && !array[i][j]->isTransformed()) {
         x = i;
         y = j;
         lowestEntropyValue = array[i][j]->getEntropyLevel();
@@ -108,7 +110,9 @@ void World::getNeighbors(std::stack<TilePositionDirection> & stack, sf::Vector2i
             } else if (x == 0 && y == 1) {
               d = S;
             }
-            stack.push({x + tilePosition.x, y + tilePosition.y, d});
+            if (!array[x + tilePosition.x][y + tilePosition.y]->isTransformed()) {
+              stack.push({x + tilePosition.x, y + tilePosition.y, d});
+            }
           }
         }
       } catch (std::out_of_range & e) { }

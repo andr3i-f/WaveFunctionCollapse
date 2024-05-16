@@ -43,16 +43,17 @@ private:
     std::array<std::array<std::unique_ptr<Tile>, 50>, 50> array;
 
     // Key - [N, E, S, W]
-    std::unordered_map<TileType, std::array<TileType, 4>> key {
-            {grass,{grass, grass, grass, grass}},
-            {grassSandHalfN, {water, grassSandHalfN, grass, grassSandHalfN}},
-            {grassSandHalfE, {grassSandHalfE, water, grassSandHalfE, grass}},
-            {grassSandHalfS, {grass, grassSandHalfS, water, grassSandHalfS}},
-            {grassSandHalfW, {grassSandHalfW, grass, grassSandHalfW, water}},
-            {grassSandCornerNE, {grassSandHalfE, grassSandHalfN, grass, grass}},
-            {grassSandCornerSE, {grass, grassSandHalfS, grassSandHalfE, grass}},
-            {grassSandCornerSW, {grass, grass, grassSandHalfW, grassSandHalfS}},
-            {grassSandCornerNW, {grassSandHalfW, grass, grass, grassSandHalfN}},
-            {water, {water, water, water, water}}
+    // Tile Connections Values - [ grass connection : 0, water connection : 1, water/grass : 2-5 (dependent on direction)]
+    std::unordered_map<TileType, std::array<int, 4>> key {
+            {grass,{0, 0, 0, 0}},
+            {grassSandHalfN, {1, 2, 0, 2}},
+            {grassSandHalfE, {3, 1, 3, 0}},
+            {grassSandHalfS, {0, 4, 1, 4}},
+            {grassSandHalfW, {5, 0, 5, 1}},
+            {grassSandCornerNE, {3, 2, 0, 0}},
+            {grassSandCornerSE, {0, 4, 3, 0}},
+            {grassSandCornerSW, {0, 0, 5, 4}},
+            {grassSandCornerNW, {5, 0, 0, 2}},
+            {water, {1, 1, 1, 1}}
     };
 };

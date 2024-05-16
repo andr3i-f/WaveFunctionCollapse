@@ -31,7 +31,7 @@ public:
     ~Tile();
 
     bool isTransformed();
-    void updatePossibilities(std::unordered_map<TileType, std::array<TileType, 4>> &, std::unique_ptr<Tile> &, Direction &);
+    void updatePossibilities(std::unordered_map<TileType, std::array<int, 4>> &, std::unique_ptr<Tile> &, Direction &);
     void transform();
 
     void draw(sf::RenderWindow&);

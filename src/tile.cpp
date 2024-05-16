@@ -21,23 +21,31 @@ Tile::Tile(Tile & other) : sprite(other.sprite), text(other.text) {
 
 Tile::~Tile() = default;
 
-void Tile::updatePossibilities(std::unordered_map<TileType, std::array<TileType, 4>> & key, std::unique_ptr<Tile> & other, Direction & otherDirection) {
-  std::vector<TileType> otherTileTypes{ other->getPossibleTiles() }; // This will be a vector of size 1 if other is already transformed
+void Tile::updatePossibilities(std::unordered_map<TileType, std::array<int, 4>> & key, std::unique_ptr<Tile> & other, Direction & otherDirection) {
+  std::vector<TileType> updatedPossibilities{};
 
-  for (const auto & [k, v] : key) {
-    bool found{false};
+  Direction oppositeDirection;
 
-    for (const TileType &t: otherTileTypes) {
-      if (v[otherDirection] == t) {
-        found = true;
+  if (otherDirection == N) {
+    oppositeDirection = S;
+  } else if (otherDirection == E) {
+    oppositeDirection = W;
+  } else if (otherDirection == S) {
+    oppositeDirection = N;
+  } else if (otherDirection == W) {
+    oppositeDirection = E;
+  }
+
+  for (const TileType &t : other->getPossibleTiles()) {
+    for (const auto & [k, v] : key) {
+      if (v[oppositeDirection] == key[t][otherDirection]) {
+        updatedPossibilities.emplace_back(k);
       }
     }
-
-    if (!found) {
-      eraseTileType(k);
-      text.setString(std::to_string(--possibilities));
-    }
   }
+  possibleTiles = updatedPossibilities;
+  possibilities = possibleTiles.size();
+  text.setString(std::to_string(possibilities));
 }
 
 void Tile::transform() {
@@ -88,7 +96,7 @@ void Tile::transform() {
     default:
       break;
   }
-
+  possibilities = 10000000;
   possibleTiles.clear();
   possibleTiles.emplace_back(type);
 }
